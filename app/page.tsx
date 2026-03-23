@@ -3,12 +3,7 @@
 import { useQuery } from "@tanstack/react-query"
 import {
   Card,
-  CardAction,
   CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
 } from "@/components/ui/card"
 
 import {
@@ -28,6 +23,7 @@ import {Loading} from "@/components/Loading";
 import {LoadingError} from "@/components/LoadingError";
 import { Button } from "@/components/ui/button"
 import Link from "next/link";
+import Image from "next/image"
 
 export default function Home() {
 
@@ -44,11 +40,6 @@ export default function Home() {
   // Default return (content is verified to exist)
   return (
     <PageContainer>
-      <Card>
-        <CardContent>
-          <p>&quot;I like reading books&quot; - Spongebob Squarepants!</p>
-        </CardContent>
-      </Card>
 
       {/* A Table for data on Books
          (Started using a template given on shadcn docs)
@@ -57,7 +48,7 @@ export default function Home() {
         <TableCaption>A list of all library books.</TableCaption>
         <TableHeader>
           <TableRow>
-            <TableHead className="w-[100px]">Title</TableHead>
+            <TableHead className="w-25">Title</TableHead>
             <TableHead>ISBN</TableHead>
             <TableHead>Page Count</TableHead>
             <TableHead>Available</TableHead>
@@ -103,6 +94,16 @@ export default function Home() {
 
         </TableBody>
       </Table>
+
+      <Card>
+        <CardContent>
+          <Image src={"/spongebob_book.jpg"}
+                 alt="Image of Spongebob reading a book"
+                 width={200}
+                 height={150}></Image>
+          <p>&quot;I like reading books&quot; - Spongebob Squarepants!</p>
+        </CardContent>
+      </Card>
 
     </PageContainer>
   );
