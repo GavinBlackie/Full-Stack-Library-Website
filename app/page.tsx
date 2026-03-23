@@ -22,7 +22,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 
-import {fetchBooks} from "@/lib/api/books";
+import {fetchBooks} from "@/lib/api/bookfetchers";
 
 export default function Home() {
 
