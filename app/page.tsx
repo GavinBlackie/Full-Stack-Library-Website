@@ -1,3 +1,6 @@
+"use client"
+
+import { useQuery } from "@tanstack/react-query"
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -19,6 +22,8 @@ import {
   TableRow,
 } from "@/components/ui/table"
 
+import {fetchBooks} from "@/lib/api/books";
+
 export default function Home() {
 
   fetch(`http://localhost:8080/api/books`)
@@ -26,7 +31,16 @@ export default function Home() {
       .then(data => console.log(data) )
       .catch(error => console.error(error))
 
+  const {data, error, isLoading} = useQuery( {
+    queryKey: ["books"],
+    queryFn: fetchBooks
+  });
 
+  // Cases that content is not currently ready!:
+  if (isLoading) return <p>Loading...</p>;
+  if (error) return <p>Error</p>
+
+  // Default return (content is verified to exist)
   return (
     <div>
       <Card>
