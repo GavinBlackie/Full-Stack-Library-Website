@@ -24,8 +24,9 @@ import {
 
 import {fetchBooks} from "@/lib/api/bookfetchers";
 import {Book} from "@/lib/api/booktype";
-import {sortByPageCount, sortByTitle} from "@/lib/api/booksorters"
 import {PageContainer} from "@/components/page-container";
+import {Loading} from "@/components/Loading";
+import {LoadingError} from "@/components/LoadingError";
 
 export default function Home() {
 
@@ -36,11 +37,8 @@ export default function Home() {
   });
 
   // Cases that content is not currently ready! - will display different stuff:
-  if (isLoading) return <p>Loading...</p>;
-  if (error) return <p>Error</p>
-
-  // https://www.geeksforgeeks.org/typescript/how-to-sort-an-array-in-typescript/
-  data?.sort( (a, b) => b.pageCount - a.pageCount);
+  if (isLoading) return <Loading/>;
+  if (error) return <LoadingError msg={error.message}/>
 
   // Default return (content is verified to exist)
   return (
@@ -100,14 +98,6 @@ export default function Home() {
 
         </TableBody>
       </Table>
-
-      {/* Some Buttons for Sorting the daperta! */}
-      <div>
-        <Button onClick={() => {data?.sort( (a, b) => b.bookTitle.localeCompare(a.bookTitle) )} }>Sort By Title</Button>
-        <Button onClick={() => data = sortByPageCount(data)}>Sort By Page Count</Button>
-        <Button >Sort By Availability</Button>
-        <Button >Sort By Fees</Button>
-      </div>
 
     </PageContainer>
   );
