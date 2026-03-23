@@ -24,21 +24,18 @@ import {
 
 import {fetchBooks} from "@/lib/api/bookfetchers";
 import {Book} from "@/lib/api/booktype";
+import {sortByPageCount, sortByTitle} from "@/lib/api/booksorters"
 import {PageContainer} from "@/components/page-container";
 
 export default function Home() {
 
-  // fetch(`http://localhost:8080/api/books`)
-  //     .then(response => response.json())
-  //     .then(data => console.log(data) )
-  //     .catch(error => console.error(error))
-
+  // Maintain a query that fetches books from the LibraryDataService API!
   const {data, error, isLoading} = useQuery( {
     queryKey: ["books"],
     queryFn: fetchBooks
   });
 
-  // Cases that content is not currently ready!:
+  // Cases that content is not currently ready! - will display different stuff:
   if (isLoading) return <p>Loading...</p>;
   if (error) return <p>Error</p>
 
@@ -50,7 +47,7 @@ export default function Home() {
     <PageContainer>
       <Card>
         <CardContent>
-          <p>"I like reading books" - Spongebob Squarepants!</p>
+          <p>&quot;I like reading books&quot; - Spongebob Squarepants!</p>
         </CardContent>
       </Card>
 
@@ -104,11 +101,12 @@ export default function Home() {
         </TableBody>
       </Table>
 
+      {/* Some Buttons for Sorting the daperta! */}
       <div>
-        <Button>Sort By Title</Button>
-        <Button>Sort By Page Count</Button>
-        <Button>Sort By Availability</Button>
-        <Button>Sort By Fees</Button>
+        <Button onClick={() => {data?.sort( (a, b) => b.bookTitle.localeCompare(a.bookTitle) )} }>Sort By Title</Button>
+        <Button onClick={() => data = sortByPageCount(data)}>Sort By Page Count</Button>
+        <Button >Sort By Availability</Button>
+        <Button >Sort By Fees</Button>
       </div>
 
     </PageContainer>
