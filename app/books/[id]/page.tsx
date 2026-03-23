@@ -13,9 +13,11 @@ import {
 } from "@/components/ui/card"
 import {Button} from "@/components/ui/button";
 import Link from "next/link";
-import {ArrowBigLeftIcon} from "lucide-react";
+import {ArrowBigLeftIcon, BookTextIcon} from "lucide-react";
 import {Loading} from "@/components/Loading";
 import {LoadingError} from "@/components/LoadingError";
+
+import "./BookDetailStyles.css";
 
 export default function BookDetails() {
     const { id } = useParams() // This gets the id path string!
@@ -26,17 +28,17 @@ export default function BookDetails() {
         queryFn: () => fetchBook(id as string)
     });
 
-    // Same loading and error pages used here
+    // Using same loading and error pages that the main page uses
     if (isLoading) return <Loading/>;
     if (error) return <LoadingError msg={error.message}/>
 
     return (
         <PageContainer>
-            <Card>
+            <Card className="card size-130">
                 <CardHeader>
-                    <CardTitle>{data?.bookTitle}</CardTitle>
-                </CardHeader>
-                <CardContent>
+                    <CardTitle className="title"> <BookTextIcon className="inline"/> {data?.bookTitle}</CardTitle>
+                    </CardHeader>
+                <CardContent className="cardContent">
                     <h3>ISBN: {data?.isbn}</h3>
                     <h3>Page Count: {data?.pageCount}</h3>
                     <h3>Availablility: {
