@@ -23,6 +23,7 @@ import {
 } from "@/components/ui/table"
 
 import {fetchBooks} from "@/lib/api/bookfetchers";
+import {Book} from "@/lib/api/booktype";
 
 export default function Home() {
 
@@ -62,19 +63,43 @@ export default function Home() {
             <TableHead className="w-[100px]">Title</TableHead>
             <TableHead>ISBN</TableHead>
             <TableHead>Page Count</TableHead>
-            <TableHead className="text-right">Available</TableHead>
+            <TableHead>Available</TableHead>
             <TableHead>Late Fee in USD</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {/* Where Books will go! */}
-          <TableRow>
+          {/* ----- Section where Books will go! ----- */}
+
+          { // Simple default row (for testing)
+            data==null ? <TableRow>
             <TableCell className="font-medium">The Silent Algorithm</TableCell>
             <TableCell>978-01</TableCell>
             <TableCell>450</TableCell>
-            <TableCell className="text-right">Yes</TableCell>
+            <TableCell>Yes</TableCell>
             <TableCell>$2.5</TableCell>
-          </TableRow>
+          </TableRow> : <></>
+          }
+
+          {/* Map all Book JSON in the data object
+              to corresponding table cells!!! */
+
+              // "For every book in books, create/map
+              // corresponding markup" - me
+              // (use ternary operator for the boolean value!!!)
+              data?.map( (book: Book) => (
+                  <TableRow key={book.itemId}>
+
+                    <TableCell>{book.bookTitle}</TableCell>
+                    <TableCell>{book.isbn}</TableCell>
+                    <TableCell>{book.pageCount}</TableCell>
+                    <TableCell>{book.isAvailable ? "Yes" : "No"}</TableCell>
+                    <TableCell>{book.lateFeeUsd}</TableCell>
+
+                  </TableRow>
+                  )
+              )
+          }
+
         </TableBody>
       </Table>
 
