@@ -5,7 +5,6 @@ import {
   Card,
   CardContent,
 } from "@/components/ui/card"
-
 import {
   Table,
   TableBody,
@@ -15,7 +14,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-
 import {fetchBooks} from "@/lib/api/bookfetchers";
 import {Book} from "@/lib/api/booktype";
 import {PageContainer} from "@/components/page-container";
@@ -23,7 +21,9 @@ import {Loading} from "@/components/Loading";
 import {LoadingError} from "@/components/LoadingError";
 import { Button } from "@/components/ui/button"
 import Link from "next/link";
-import Image from "next/image"
+import Image from "next/image";
+import "./MainPageStyles.css";
+import {LibraryBigIcon} from "lucide-react";
 
 export default function Home() {
 
@@ -40,6 +40,13 @@ export default function Home() {
   // Default return (content is verified to exist)
   return (
     <PageContainer>
+
+      <div>
+        <LibraryBigIcon className="size-24"/>
+        <h1 className="title">Library Data Viewer</h1>
+      </div>
+
+      <h4>Welcome to the best webpage for viewing the best library books!</h4>
 
       {/* A Table for data on Books
          (Started using a template given on shadcn docs)
@@ -59,7 +66,7 @@ export default function Home() {
           {/* ----- Section where Books will go! ----- */}
 
           { // Simple default row (for testing)
-            data==null ? <TableRow>
+            data==null ? <TableRow className="tableRow">
             <TableCell className="font-medium">The Silent Algorithm</TableCell>
             <TableCell>978-01</TableCell>
             <TableCell>450</TableCell>
@@ -78,7 +85,7 @@ export default function Home() {
                 // corresponding markup" - me
                 // (use ternary operator for the boolean value!!!)
                 data?.map( (book: Book) => (
-                    <TableRow key={book.itemId}>
+                    <TableRow className="tableRow" key={book.itemId}>
                     <TableCell>
                       <Button variant="link" asChild>
                         <Link href={`/books/${book.itemId}`}>{book.bookTitle}</Link>
@@ -95,7 +102,8 @@ export default function Home() {
         </TableBody>
       </Table>
 
-      <Card>
+      <div className="decorationCardSection">
+      <Card className="card">
         <CardContent>
           <Image src={"/spongebob_book.jpg"}
                  alt="Image of Spongebob reading a book"
@@ -104,6 +112,17 @@ export default function Home() {
           <p>&quot;I like reading books&quot; - Spongebob Squarepants!</p>
         </CardContent>
       </Card>
+
+      <Card className="card">
+        <CardContent>
+          <Image src={"/patrick_reading.jpg"}
+                 alt="Image of Spongebob reading a book"
+                 width={200}
+                 height={150}></Image>
+          <p>&quot;I can&apos;t read&quot; - Patrick Star</p>
+        </CardContent>
+      </Card>
+      </div>
 
     </PageContainer>
   );
