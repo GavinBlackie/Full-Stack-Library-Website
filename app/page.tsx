@@ -80,12 +80,14 @@ export default function Home() {
           {/* Map all Book JSON in the data object
               to corresponding table cells!!! */
 
-              // "For every book in books, create/map
-              // corresponding markup" - me
-              // (use ternary operator for the boolean value!!!)
-              data?.map( (book: Book) => (
-                  <TableRow key={book.itemId}>
+            // This is needed for some reason to allow returning to main page
+              Array.isArray(data) ?
 
+                // "For every book in books, create/map
+                // corresponding markup" - me
+                // (use ternary operator for the boolean value!!!)
+                data?.map( (book: Book) => (
+                    <TableRow key={book.itemId}>
                     <TableCell>
                       <Button variant="link" asChild>
                         <Link href={`/books/${book.itemId}`}>{book.bookTitle}</Link>
@@ -95,10 +97,8 @@ export default function Home() {
                     <TableCell>{book.pageCount}</TableCell>
                     <TableCell>{book.isAvailable ? "Yes" : "No"}</TableCell>
                     <TableCell>{book.lateFeeUsd}</TableCell>
-
-                  </TableRow>
-                  )
-              )
+                    </TableRow>
+                )) : <></>
           }
 
         </TableBody>
