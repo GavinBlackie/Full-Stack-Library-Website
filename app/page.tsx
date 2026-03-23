@@ -26,15 +26,17 @@ import {fetchBooks} from "@/lib/api/books";
 
 export default function Home() {
 
-  fetch(`http://localhost:8080/api/books`)
-      .then(response => response.json())
-      .then(data => console.log(data) )
-      .catch(error => console.error(error))
+  // fetch(`http://localhost:8080/api/books`)
+  //     .then(response => response.json())
+  //     .then(data => console.log(data) )
+  //     .catch(error => console.error(error))
 
   const {data, error, isLoading} = useQuery( {
     queryKey: ["books"],
     queryFn: fetchBooks
   });
+
+  console.log(data);
 
   // Cases that content is not currently ready!:
   if (isLoading) return <p>Loading...</p>;
