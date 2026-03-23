@@ -24,6 +24,7 @@ import {
 
 import {fetchBooks} from "@/lib/api/bookfetchers";
 import {Book} from "@/lib/api/booktype";
+import {PageContainer} from "@/components/page-container";
 
 export default function Home() {
 
@@ -37,19 +38,19 @@ export default function Home() {
     queryFn: fetchBooks
   });
 
-  console.log(data);
-
   // Cases that content is not currently ready!:
   if (isLoading) return <p>Loading...</p>;
   if (error) return <p>Error</p>
 
+  // https://www.geeksforgeeks.org/typescript/how-to-sort-an-array-in-typescript/
+  data?.sort( (a, b) => b.pageCount - a.pageCount);
+
   // Default return (content is verified to exist)
   return (
-    <div>
+    <PageContainer>
       <Card>
         <CardContent>
           <p>"I like reading books" - Spongebob Squarepants!</p>
-          <Button>Click Me</Button>
         </CardContent>
       </Card>
 
@@ -103,6 +104,13 @@ export default function Home() {
         </TableBody>
       </Table>
 
-    </div>
+      <div>
+        <Button>Sort By Title</Button>
+        <Button>Sort By Page Count</Button>
+        <Button>Sort By Availability</Button>
+        <Button>Sort By Fees</Button>
+      </div>
+
+    </PageContainer>
   );
 }
