@@ -8,3 +8,9 @@ export async function fetchBooks() {
 
     return response.data;
 }
+
+export async function fetchBook(id : string) {
+    const response = await axios.get<Book>(`http://localhost:8080/api/books/${id}`)
+
+    return response.data;
+}
