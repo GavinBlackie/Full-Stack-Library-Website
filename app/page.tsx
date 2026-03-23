@@ -1,7 +1,6 @@
 "use client"
 
 import { useQuery } from "@tanstack/react-query"
-import { Button } from "@/components/ui/button"
 import {
   Card,
   CardAction,
@@ -27,6 +26,8 @@ import {Book} from "@/lib/api/booktype";
 import {PageContainer} from "@/components/page-container";
 import {Loading} from "@/components/Loading";
 import {LoadingError} from "@/components/LoadingError";
+import { Button } from "@/components/ui/button"
+import Link from "next/link";
 
 export default function Home() {
 
@@ -85,7 +86,11 @@ export default function Home() {
               data?.map( (book: Book) => (
                   <TableRow key={book.itemId}>
 
-                    <TableCell>{book.bookTitle}</TableCell>
+                    <TableCell>
+                      <Button variant="link" asChild>
+                        <Link href={`/books/${book.itemId}`}>{book.bookTitle}</Link>
+                      </Button>
+                    </TableCell>
                     <TableCell>{book.isbn}</TableCell>
                     <TableCell>{book.pageCount}</TableCell>
                     <TableCell>{book.isAvailable ? "Yes" : "No"}</TableCell>
