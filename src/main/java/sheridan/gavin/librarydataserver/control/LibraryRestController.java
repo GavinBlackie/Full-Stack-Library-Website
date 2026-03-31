@@ -1,6 +1,7 @@
 package sheridan.gavin.librarydataserver.control;
 
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +21,7 @@ public class LibraryRestController {
         this.bookRepo = bookRepo;
     }
 
+    /* --- GET All Cities ---*/
     @GetMapping(produces = "application/json")
     @Operation(summary = "Retrieves all books", description = "Returns a list of all books")
     public List<Book> getAllBooks() {
@@ -27,11 +29,23 @@ public class LibraryRestController {
         return bookRepo.findAll();
     }
 
+    /* --- Single GET City Request Handler --- */
     // Has extra mapping value (/api/books/**id here**)
     @GetMapping(value="/{id}", produces = "application/json")
     // The @PathVariable gets the /{id} part (as opposed to @RequestParam with ?id=)
     public ResponseEntity<Book> getBook(@PathVariable String id) {
         return bookRepo.findById(id).map(ResponseEntity::ok)
                 .orElseThrow(() -> new IllegalArgumentException("City with id '" + id + "' not found"));
+    }
+
+    /*
+       --- POST a single new City ---
+     */
+    @PostMapping(produces = "application/json")
+    @Operation(summary = "POST a single new city", description = "POST mapping allowing for creation of a new city in the database.")
+    public Book postBook(@RequestBody @Valid Book book) {
+        log.info("A new book has been POSTed to the database.");
+        // TODO: add potential validation here
+        return bookRepo.save(book); // Return the new saved book!
     }
 }
