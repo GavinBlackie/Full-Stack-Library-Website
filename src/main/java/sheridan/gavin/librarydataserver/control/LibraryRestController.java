@@ -3,6 +3,7 @@ package sheridan.gavin.librarydataserver.control;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.coyote.Response;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -76,5 +77,19 @@ public class LibraryRestController {
         // 3. Return the newly changed book
         bookRepo.save(foundBook);
         return foundBook;
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteBook(@PathVariable String id) throws NoResourceFoundException {
+        log.trace("Attempting to delete city with id: {}", id);
+
+        // If that book exists, delete it and send a response!
+        if (bookRepo.existsById(id)) {
+            bookRepo.deleteById(id);
+
+            return ResponseEntity.noContent().build();
+        } else {
+            throw new NoResourceFoundException(HttpMethod.GET, null, "/api/cities/" + id); // Else let the error handler do something!
+        }
     }
 }
