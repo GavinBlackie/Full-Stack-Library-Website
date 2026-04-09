@@ -23,5 +23,10 @@ public class Book {
     @JsonProperty(value="isAvailable")
     private boolean available;
 
+    // Need to declare this manually!!!
+    public boolean getAvailable() {
+        return available;
+    }
+
     private double lateFeeUsd;
 }
