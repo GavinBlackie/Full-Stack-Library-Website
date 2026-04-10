@@ -17,8 +17,9 @@ import {
 import {Controller} from "react-hook-form";
 import * as z from "zod";
 import {zodResolver} from "@hookform/resolvers/zod";
-import {Card, CardContent} from "@/components/ui/card";
+import {Card, CardContent, CardFooter} from "@/components/ui/card";
 import {Input} from "@/components/ui/input";
+import {Button} from "@/components/ui/button";
 
 // A book schema made of Zod objects (for the forms),
 const bookSchema = z.object({
@@ -66,7 +67,7 @@ export default function AddBookPage() {
         <PageContainer>
             <Card>
                 <CardContent>
-                <form>
+                <form id="newBookForm">
                     <Controller
                         name="itemId"
                         control={form.control}
@@ -76,15 +77,49 @@ export default function AddBookPage() {
                                 <Input
                                     {...field}
                                     id={field.name}
+                                    type="text"
                                     placeholder="BK-00"
                                 />
                                 <FieldDescription>
                                     Enter an item id.
                                 </FieldDescription>
+                                { // Conditionally render an error!
+                                    fieldState.invalid && <FieldError errors={ [fieldState.error] }/>
+                                }
+                            </Field>
+                        )}
+                    />
+                    <Controller
+                        name="isbn"
+                        control={form.control}
+                        render={( {field, fieldState} ) => (
+                            <Field>
+                                <FieldLabel htmlFor={field.name}></FieldLabel>
+                                <Input
+                                    {...field}
+                                    id={field.name}
+                                    type="text"
+                                    placeholder="999-9999"
+                                />
+                                <FieldDescription>
+                                    Enter the book ISBN.
+                                </FieldDescription>
+                                { // Conditionally render an error!
+                                    fieldState.invalid && <FieldError errors={ [fieldState.error] }/>
+                                }
                             </Field>
                         )}
                     />
                 </form>
+                    {/* Footer in the Card for form buttons
+                    (they don't have to be inside the form tag itself) */}
+                    <CardFooter>
+                        <Field>
+                            <Button type="submit" form="newBookForm">
+                                Submit
+                            </Button>
+                        </Field>
+                    </CardFooter>
                 </CardContent>
             </Card>
         </PageContainer>
