@@ -14,7 +14,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import {fetchBooks} from "@/lib/api/bookfetchers";
+import {fetchBooks} from "@/lib/api/book";
 import {Book} from "@/lib/api/booktype";
 import {PageContainer} from "@/components/page-container";
 import {Loading} from "@/components/Loading";

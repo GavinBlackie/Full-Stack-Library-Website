@@ -3,7 +3,7 @@
 import {PageContainer} from "@/components/page-container";
 import {useParams} from "next/dist/client/components/navigation";
 import {useQuery} from "@tanstack/react-query";
-import {fetchBook} from "@/lib/api/bookfetchers";
+import {fetchBook} from "@/lib/api/book";
 import {
     Card,
     CardContent,
