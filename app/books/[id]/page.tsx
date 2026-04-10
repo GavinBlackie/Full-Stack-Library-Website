@@ -19,7 +19,7 @@ import {LoadingError} from "@/components/LoadingError";
 
 import "./BookDetailStyles.css";
 
-export default function BookDetails() {
+export default function BookDetailsPage() {
     const { id } = useParams() // This gets the id path string!
 
     // Now create an async query for individual books
