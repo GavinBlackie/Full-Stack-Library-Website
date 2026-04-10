@@ -20,6 +20,8 @@ import {zodResolver} from "@hookform/resolvers/zod";
 import {Card, CardContent, CardFooter} from "@/components/ui/card";
 import {Input} from "@/components/ui/input";
 import {Button} from "@/components/ui/button";
+import {useMutation} from "@tanstack/react-query";
+import {addBook} from "@/lib/api/book";
 
 // A book schema made of Zod objects (for the forms),
 const bookSchema = z.object({
@@ -53,7 +55,21 @@ export default function AddBookPage() {
             bookTitle: "",
             pageCount: 1,
             available: false,
-            lateFeeUsd: 0
+            lateFeeUsd: 0.1
+        }
+    });
+
+    /* Following the pattern in CityDataClient!
+    * This function will be the one actually calling the async addBook function,
+    * it can also cause redirections! (in this case, it will go back to the root page!)
+    */
+    const { mutate } = useMutation({
+        mutationFn: addBook,
+        onSuccess: () => {
+            console.log("POSTED");
+        },
+        onError: (err: Error) => {
+            console.error(err);
         }
     });
 
@@ -61,13 +77,14 @@ export default function AddBookPage() {
     // Might be used to trigger other things in the program unrelated to the actual form submission
     function onSubmit(data: z.infer<typeof bookSchema>) {
         console.log("Submiting: ", data);
+        mutate(data); // Trigger the actual async POST mutation with the form data!
     }
 
     return (
         <PageContainer>
             <Card>
                 <CardContent>
-                <form id="newBookForm">
+                <form id="newBookForm" onSubmit={form.handleSubmit(onSubmit)}>
                     <Controller
                         name="itemId"
                         control={form.control}

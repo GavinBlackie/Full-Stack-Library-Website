@@ -3,7 +3,7 @@
 export interface Book {
     itemId: string
     bookTitle: string,
-    isAvailable: boolean,
+    available: boolean,
     isbn: string,
     pageCount: number,
     lateFeeUsd: number

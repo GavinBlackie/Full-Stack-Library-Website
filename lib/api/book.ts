@@ -3,7 +3,7 @@
 import axios from 'axios';
 import {Book} from "@/lib/api/booktype";
 
-function generateURL(id?: string) : string {
+function generateAPIURL(id?: string) : string {
     if (id) {
         return `http://localhost:8080/api/books/${id}`;
     } else {
@@ -11,17 +11,32 @@ function generateURL(id?: string) : string {
     }
 }
 
+// For fetching ALL books (GET)
 export async function fetchBooks() {
-    const response = await axios.get<Book[]>(generateURL());
+    const response = await axios.get<Book[]>(generateAPIURL());
     return response.data;
 }
 
+// For fetching a CERTAIN book by id (GET)
 export async function fetchBook(id : string) {
-    const response = await axios.get<Book>(generateURL(id));
+    const response = await axios.get<Book>(generateAPIURL(id));
     return response.data;
 }
 
+// For adding new books (POST)
+// returns a Promise object containing information about how the POST went!
+export async function addBook(book : Book): Promise<Book> {
+    const response = await axios.post(generateAPIURL(),
+            book,
+            {
+                headers: { "Content-Type" : "application/json"}
+            }
+        );
+    return response.data;
+}
+
+// For deleting an existing book by its id (DELETE)
 export async function deleteBook(id : string) {
-    const response = await axios.delete(generateURL(id));
+    const response = await axios.delete(generateAPIURL(id));
     return response.data;
 }
