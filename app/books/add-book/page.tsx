@@ -18,6 +18,7 @@ import {Controller} from "react-hook-form";
 import * as z from "zod";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {Card, CardContent} from "@/components/ui/card";
+import {Input} from "@/components/ui/input";
 
 // A book schema made of Zod objects (for the forms),
 const bookSchema = z.object({
@@ -55,6 +56,8 @@ export default function AddBookPage() {
         }
     });
 
+    // Function that runs every time a form is submitted!
+    // Might be used to trigger other things in the program unrelated to the actual form submission
     function onSubmit(data: z.infer<typeof bookSchema>) {
         console.log("Submiting: ", data);
     }
@@ -67,11 +70,20 @@ export default function AddBookPage() {
                     <Controller
                         name="itemId"
                         control={form.control}
-                        >
-                        <Field>
-
-                        </Field>
-                    </Controller>
+                        render={( {field, fieldState} ) => (
+                            <Field>
+                                <FieldLabel htmlFor={field.name}></FieldLabel>
+                                <Input
+                                    {...field}
+                                    id={field.name}
+                                    placeholder="BK-00"
+                                />
+                                <FieldDescription>
+                                    Enter an item id.
+                                </FieldDescription>
+                            </Field>
+                        )}
+                    />
                 </form>
                 </CardContent>
             </Card>
