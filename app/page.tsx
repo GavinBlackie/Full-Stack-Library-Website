@@ -144,16 +144,16 @@ export default function Home() {
                         <TableCell>{book.isAvailable ? "Yes" : "No"}</TableCell>
                         <TableCell>{book.lateFeeUsd}</TableCell>
                         <TableCell>
-                            <Button className="m-1 py-2 px-4 bg-red-900 transform hover:bg-red-700 hover:scale-125">
-                                <Link href={`/delete-book/${book.itemId}`}>
+                            <Link href={`/delete-book/${book.itemId}`}>
+                                <Button className="m-1 py-4 px-6 bg-red-900 transform hover:bg-red-700 hover:scale-125">
                                     <Trash2Icon/>
-                                </Link>
-                            </Button>
-                            <Button className="m-1 py-2 px-4 bg-cyan-600 transform hover:bg-cyan-500 hover:scale-125">
-                                <Link href={`/edit-book/${book.itemId}`}>
+                                </Button>
+                            </Link>
+                            <Link href={`/edit-book/${book.itemId}`}>
+                                <Button className="m-1 py-4 px-6 bg-cyan-600 transform hover:bg-cyan-500 hover:scale-125">
                                     <WrenchIcon/>
-                                </Link>
-                            </Button>
+                                </Button>
+                            </Link>
                         </TableCell>
                     </TableRow>
                 ))
