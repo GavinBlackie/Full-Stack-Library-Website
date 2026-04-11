@@ -48,7 +48,7 @@ export default function BookDetailsPage() {
                     <h3>Late Fee (in USD): ${data?.lateFeeUsd}</h3>
                 </CardContent>
                 <CardFooter>
-                    <Button className="mt-2" asChild>
+                    <Button className="m-2 py-4 px-6 bg-red-700 transform hover:scale-125 hover:bg-red-400" asChild>
                         <Link href="/">
                             <ArrowBigLeftIcon></ArrowBigLeftIcon>
                             Go Back to Book List

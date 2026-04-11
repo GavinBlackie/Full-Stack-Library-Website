@@ -139,11 +139,14 @@ export default function AddBookPage() {
                     <CardFooter>
                         <Field>
                             <ButtonGroup>
-                                <Button type="submit" form="newBookForm">
+                                <Button
+                                    className="my-2 ml-2 py-6 px-14 text-2xl bg-green-600 transform hover:bg-green-300 hover:scale-125"
+                                    type="submit" form="newBookForm">
                                     Submit
                                 </Button>
-                                <Button asChild variant="outline">
-                                    <Link href="/">
+                                <Button className="my-2 mr-2 py-6 px-14 text-2xl bg-red-700 transform hover:bg-red-400 hover:scale-125"
+                                    asChild variant="outline">
+                                    <Link className="text-white hover:text-white" href="/">
                                         Cancel
                                     </Link>
                                 </Button>

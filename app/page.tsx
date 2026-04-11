@@ -23,7 +23,7 @@ import { Button } from "@/components/ui/button"
 import Link from "next/link";
 import Image from "next/image";
 import "./MainPageStyles.css";
-import {LibraryBigIcon} from "lucide-react";
+import {HammerIcon, LibraryBigIcon} from "lucide-react";
 
 export default function Home() {
 
@@ -101,6 +101,12 @@ export default function Home() {
 
         </TableBody>
       </Table>
+
+        <div>
+            <Button className="m-2 py-6 px-14 text-2xl bg-green-600 transform hover:bg-green-300 hover:scale-125" asChild>
+                <Link href="/add-book"> <HammerIcon/> Add Book</Link>
+            </Button>
+        </div>
 
       <div className="decorationCardSection">
       <Card className="card">
