@@ -14,6 +14,10 @@ function generateAPIURL(id?: string) : string {
 // For fetching ALL books (GET)
 export async function fetchBooks() {
     const response = await axios.get<Book[]>(generateAPIURL());
+
+    // Sort all books by title
+    response.data.sort( (a, b) => a.bookTitle.localeCompare(b.bookTitle) );
+
     return response.data;
 }
 

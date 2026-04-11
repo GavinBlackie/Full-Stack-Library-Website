@@ -13,7 +13,7 @@ import {FormController} from "@/components/FormController";
 import { useRouter } from "next/navigation"
 import {ButtonGroup} from "@/components/ui/button-group";
 import Link from "next/link";
-import {ArrowBigRight, ArrowBigUpDash} from "lucide-react";
+import {ArrowBigRight, ArrowBigUpDash, RefreshCcwIcon} from "lucide-react";
 import {bookSchema} from "@/lib/book-zod-schema";
 
 // Reference docs for form Controllers and Fields:
@@ -91,7 +91,6 @@ export default function AddBookPage() {
                                     label="Book Title"
                                     placeholder="Lord of the Rings - The Fellowship of the Ring"
                                     desc="Enter book title. "
-                                    value="Title"
                                     form={form}
                     />
                     <FormController name="isAvailable"
@@ -127,6 +126,10 @@ export default function AddBookPage() {
                                     type="submit" form="newBookForm">
                                     <ArrowBigUpDash/>
                                     Submit
+                                </Button>
+                                <Button className="my-2 py-6 px-8 text-2xl bg-yellow-600 transform hover:bg-yellow-500 hover:scale-110"
+                                    onClick={ () => {form.reset()}}>
+                                    <RefreshCcwIcon/>Reset
                                 </Button>
                                 <Button className="my-2 mr-2 py-6 px-14 text-2xl bg-red-700 transform hover:bg-red-400 hover:scale-125"
                                     asChild variant="outline">

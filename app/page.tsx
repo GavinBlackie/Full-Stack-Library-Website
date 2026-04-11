@@ -23,7 +23,7 @@ import { Button } from "@/components/ui/button"
 import Link from "next/link";
 import Image from "next/image";
 import "./MainPageStyles.css";
-import {HammerIcon, LibraryBigIcon, Trash2Icon} from "lucide-react";
+import {HammerIcon, LibraryBigIcon, SettingsIcon, Trash2Icon} from "lucide-react";
 
 export default function Home() {
 
@@ -60,6 +60,7 @@ export default function Home() {
             <TableHead>Page Count</TableHead>
             <TableHead>Available</TableHead>
             <TableHead>Late Fee in USD</TableHead>
+            <TableHead><SettingsIcon/>Options</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
