@@ -23,7 +23,7 @@ import { Button } from "@/components/ui/button"
 import Link from "next/link";
 import Image from "next/image";
 import "./MainPageStyles.css";
-import {HammerIcon, LibraryBigIcon} from "lucide-react";
+import {HammerIcon, LibraryBigIcon, Trash2Icon} from "lucide-react";
 
 export default function Home() {
 
@@ -79,24 +79,31 @@ export default function Home() {
               to corresponding table cells!!! */
 
             // This is needed for some reason to allow returning to main page
-              Array.isArray(data) ?
+              Array.isArray(data) &&
 
                 // "For every book in books, create/map
                 // corresponding markup" - me
                 // (use ternary operator for the boolean value!!!)
                 data?.map( (book: Book) => (
                     <TableRow className="tableRow" key={book.itemId}>
-                    <TableCell>
-                      <Button variant="link" asChild>
-                        <Link href={`/books/${book.itemId}`}>{book.bookTitle}</Link>
-                      </Button>
-                    </TableCell>
-                    <TableCell>{book.isbn}</TableCell>
-                    <TableCell>{book.pageCount}</TableCell>
-                    <TableCell>{book.isAvailable ? "Yes" : "No"}</TableCell>
-                    <TableCell>{book.lateFeeUsd}</TableCell>
+                        <TableCell>
+                          <Button variant="link" asChild>
+                            <Link href={`/books/${book.itemId}`}>{book.bookTitle}</Link>
+                          </Button>
+                        </TableCell>
+                        <TableCell>{book.isbn}</TableCell>
+                        <TableCell>{book.pageCount}</TableCell>
+                        <TableCell>{book.isAvailable ? "Yes" : "No"}</TableCell>
+                        <TableCell>{book.lateFeeUsd}</TableCell>
+                        <TableCell>
+                            <Button className="m-1 p-2 bg-red-900 transform hover:bg-red-700 hover:scale-125">
+                                <Link href={`/delete-book/${book.itemId}`}>
+                                    <Trash2Icon/>
+                                </Link>
+                            </Button>
+                        </TableCell>
                     </TableRow>
-                )) : <></>
+                ))
           }
 
         </TableBody>
