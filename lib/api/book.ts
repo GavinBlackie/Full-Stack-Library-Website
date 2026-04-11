@@ -24,7 +24,6 @@ export async function fetchBooks() {
 // For fetching a CERTAIN book by id (GET)
 export async function fetchBook(id : string) {
     const response = await axios.get<Book>(generateAPIURL(id));
-    console.log(response.data.isAvailable)
     return response.data;
 }
 
@@ -32,6 +31,17 @@ export async function fetchBook(id : string) {
 // returns a Promise object containing information about how the POST went!
 export async function addBook(book : Book): Promise<Book> {
     const response = await axios.post(generateAPIURL(),
+            book,
+            {
+                headers: { "Content-Type" : "application/json"}
+            }
+        );
+    return response.data;
+}
+
+// For editing existing books (PUT)
+export async function editBook(book : Book) : Promise<Book> {
+    const response = await axios.put(generateAPIURL(book.itemId),
             book,
             {
                 headers: { "Content-Type" : "application/json"}

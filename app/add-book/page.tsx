@@ -27,7 +27,7 @@ export default function AddBookPage() {
     const form = useForm<z.infer<typeof bookSchema>>({
         resolver: zodResolver(bookSchema),
         defaultValues: { // Specify default form values
-            itemId: "BK-00",
+            itemId: "BK-01",
             isbn: "999-9999",
             bookTitle: "",
             pageCount: 1,
@@ -83,7 +83,6 @@ export default function AddBookPage() {
                                     label="ISBN"
                                     placeholder="999-9999"
                                     desc="Enter the book ISBN. "
-                                    value="999-9999"
                                     form={form}
                     />
                     <FormController name="bookTitle"
