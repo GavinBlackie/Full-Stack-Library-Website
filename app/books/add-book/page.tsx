@@ -23,6 +23,7 @@ import {Button} from "@/components/ui/button";
 import {useMutation} from "@tanstack/react-query";
 import {addBook} from "@/lib/api/book";
 import {FormController} from "@/components/FormController";
+import {Checkbox} from "@/components/ui/checkbox";
 
 // A book schema made of Zod objects (for the forms),
 const bookSchema = z.object({
@@ -77,7 +78,7 @@ export default function AddBookPage() {
     // Function that runs every time a form is submitted!
     // Might be used to trigger other things in the program unrelated to the actual form submission
     function onSubmit(data: z.infer<typeof bookSchema>) {
-        console.log("Submiting: ", data);
+        console.log("Submitting: ", data);
         mutate(data); // Trigger the actual async POST mutation with the form data!
     }
 
@@ -86,38 +87,40 @@ export default function AddBookPage() {
             <Card>
                 <CardContent>
                 <form id="newBookForm" onSubmit={form.handleSubmit(onSubmit)}>
-                    <Controller
-                        name="itemId"
-                        control={form.control}
-                        render={( {field, fieldState} ) => (
-                            <Field>
-                                <FieldLabel htmlFor={field.name}></FieldLabel>
-                                <Input
-                                    {...field}
-                                    id={field.name}
+                    <FormController name="itemId"
                                     type="text"
                                     placeholder="BK-00"
-                                />
-                                <FieldDescription>
-                                    Enter an item id.
-                                </FieldDescription>
-                                { // Conditionally render an error!
-                                    fieldState.invalid && <FieldError errors={ [fieldState.error] }/>
-                                }
-                            </Field>
-                        )}
+                                    desc="Enter the book id. "
+                                    form={form}
                     />
+                    <FormController name="isbn"
+                                    type="text"
+                                    placeholder="999-9999"
+                                    desc="Enter the book ISBN. "
+                                    value="999-9999"
+                                    form={form}
+                    />
+                    <FormController name="bookTitle"
+                                    type="text"
+                                    placeholder="Lord of the Rings - The Fellowship of the Ring"
+                                    desc="Enter book title. "
+                                    value="Title"
+                                    form={form}
+                    />
+
                     <Controller
-                        name="isbn"
+                        name="available"
                         control={form.control}
                         render={( {field, fieldState} ) => (
                             <Field>
                                 <FieldLabel htmlFor={field.name}></FieldLabel>
-                                <Input
+                                <Checkbox
                                     {...field}
                                     id={field.name}
-                                    type="text"
-                                    placeholder="999-9999"
+                                    value={typeof field.value === "string" || typeof field.value === "number" ? field.value : ""} // Also had to put this here as well
+                                    checked={field.value}
+                                    onCheckedChange={field.onChange}
+                                    defaultChecked
                                 />
                                 <FieldDescription>
                                     Enter the book ISBN.
@@ -128,11 +131,7 @@ export default function AddBookPage() {
                             </Field>
                         )}
                     />
-                    <FormController name="bookTitle"
-                                    type="text"
-                                    placeholder="Lord of the Rings - The Fellowship of the Ring"
-                                    desc="Enter book title. "
-                                    form={form}/>
+
                 </form>
                     {/* Footer in the Card for form buttons
                     (they don't have to be inside the form tag itself) */}
