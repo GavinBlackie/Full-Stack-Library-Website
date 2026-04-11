@@ -2,6 +2,7 @@ package sheridan.gavin.librarydataserver.control;
 
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
+import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -34,6 +35,7 @@ public class LibraryRestController {
     /* --- Single GET City Request Handler --- */
     // Has extra mapping value (/api/books/**id here**)
     @GetMapping(value="/{id}", produces = "application/json")
+    @Operation(summary = "Get a single book object", description = "GET mapping for a single book object")
     // The @PathVariable gets the /{id} part (as opposed to @RequestParam with ?id=)
     public ResponseEntity<Book> getBook(@PathVariable String id) {
         return bookRepo.findById(id).map(ResponseEntity::ok)
@@ -44,7 +46,7 @@ public class LibraryRestController {
        --- POST a single new City ---
      */
     @PostMapping(produces = "application/json")
-    @Operation(summary = "POST a single new city", description = "POST mapping allowing for creation of a new book in the database. ")
+    @Operation(summary = "Add a single new book", description = "POST mapping allowing for creation of a new book in the database. ")
     public Book postBook(@RequestBody @Valid Book book) {
         log.info("A new book has been POSTed to the database.");
         // TODO: add potential validation here
@@ -55,7 +57,7 @@ public class LibraryRestController {
       --- PUT: Edit a single City! ---
      */
     @PutMapping("/{searchId}")
-    @Operation(summary = "PUT a city", description = "Edit a single book in the database. ")
+    @Operation(summary = "Edit an existing city", description = "Edit a single book in the database. ")
     public Book putBook(@PathVariable String searchId, @RequestBody @Valid Book editedBook) throws NoResourceFoundException{
         log.trace("Attempting to edit book with id: {}", searchId);
 
@@ -78,6 +80,7 @@ public class LibraryRestController {
     }
 
     @DeleteMapping("/{id}")
+    @Operation(summary = "Delete a single book object", description = "Perform a DELETE on a single book in the database")
     public ResponseEntity<Void> deleteBook(@PathVariable String id) throws NoResourceFoundException {
         log.trace("Attempting to delete book with id: {}", id);
 

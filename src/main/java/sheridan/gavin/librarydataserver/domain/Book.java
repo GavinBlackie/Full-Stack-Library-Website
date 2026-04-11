@@ -1,6 +1,7 @@
 package sheridan.gavin.librarydataserver.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.v3.oas.annotations.Hidden;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.Getter;
