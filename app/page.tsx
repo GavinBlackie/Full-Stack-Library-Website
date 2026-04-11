@@ -38,7 +38,7 @@ export default function Home() {
     // --- Credit to Perplexity AI for helping me find out how to sort things!! ---
     // https://www.perplexity.ai/search/in-react-nextjs-typescript-how-PrQNTXYhS7GXFZw.ASsU7Q?sm=d
     const displayBooks = useMemo(() => {
-        if (!data) return [];
+        if (!Array.isArray(data)) return [];
 
         return [...data].sort((a, b) => {
 
