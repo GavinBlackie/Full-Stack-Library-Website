@@ -113,28 +113,12 @@ export default function AddBookPage() {
                                     desc="Is the book currently available to loan? "
                                     form={form}
                     />
-                    <Controller
-                        name="pageCount"
-                        control={form.control}
-                        rules={{ required: true }}
-                        render={( {field, fieldState} ) => (
-                            <Field>
-                                <FieldLabel htmlFor={field.name}></FieldLabel>
-                                <Input
-                                    {...field}
-                                    id={field.name}
+                    <FormController name="pageCount"
                                     type="number"
-                                    step={1}
+                                    desc="Enter the page count. "
                                     placeholder="200"
-                                />
-                                <FieldDescription>
-                                    Enter the pageCount
-                                </FieldDescription>
-                                { // Conditionally render an error!
-                                    fieldState.invalid && <FieldError errors={ [fieldState.error] }/>
-                                }
-                            </Field>
-                        )}
+                                    stepSize={1}
+                                    form={form}
                     />
                 </form>
                     {/* Footer in the Card for form buttons

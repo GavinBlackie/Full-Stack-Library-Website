@@ -11,6 +11,7 @@ export interface ControllerProps {
     placeholder?: string,
     desc : string,
     value?: string,
+    stepSize? : number,
     form : UseFormReturn<Book, Book>,
 }
 
@@ -42,6 +43,17 @@ function GenerateInputTag(props : ControllerProps,
                     value={typeof field.value === "string" || typeof field.value === "number" ? field.value : ""} // Also had to put this here as well
                     checked={field.value === true} // This had to be this way to work!
                     onCheckedChange={field.onChange}
+                />
+            );
+        case "number":
+            return (
+                <Input
+                    {...field}
+                    id={field.name}
+                    type="number"
+                    value={typeof field.value === "string" || typeof field.value === "number" ? field.value : ""} // And here to prevent errors
+                    step={props.stepSize}
+                    placeholder="200"
                 />
             );
     }
