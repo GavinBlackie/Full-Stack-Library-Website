@@ -23,7 +23,6 @@ import {Button} from "@/components/ui/button";
 import {useMutation} from "@tanstack/react-query";
 import {addBook} from "@/lib/api/book";
 import {FormController} from "@/components/FormController";
-import {Checkbox} from "@/components/ui/checkbox";
 
 // A book schema made of Zod objects (for the forms),
 const bookSchema = z.object({
@@ -33,8 +32,10 @@ const bookSchema = z.object({
         .string(),
     bookTitle: z
         .string(),
-    pageCount: z
-        .int().positive(),
+    pageCount: z.coerce
+        .number<number>("Population must be a number")
+        .int("Population must be a whole number")
+        .min(0, "Population cannot be negative"),
     available: z
         .boolean(),
     lateFeeUsd: z
@@ -111,6 +112,29 @@ export default function AddBookPage() {
                                     type="checkbox"
                                     desc="Is the book currently available to loan? "
                                     form={form}
+                    />
+                    <Controller
+                        name="pageCount"
+                        control={form.control}
+                        rules={{ required: true }}
+                        render={( {field, fieldState} ) => (
+                            <Field>
+                                <FieldLabel htmlFor={field.name}></FieldLabel>
+                                <Input
+                                    {...field}
+                                    id={field.name}
+                                    type="number"
+                                    step={1}
+                                    placeholder="200"
+                                />
+                                <FieldDescription>
+                                    Enter the pageCount
+                                </FieldDescription>
+                                { // Conditionally render an error!
+                                    fieldState.invalid && <FieldError errors={ [fieldState.error] }/>
+                                }
+                            </Field>
+                        )}
                     />
                 </form>
                     {/* Footer in the Card for form buttons

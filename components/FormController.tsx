@@ -45,7 +45,7 @@ function GenerateInputTag(props : ControllerProps,
                 />
             );
     }
-    return <></>
+    return <></> // Return an empty tag for unexpected cases!!!
 }
 
 /* FormController:
@@ -58,6 +58,7 @@ export function FormController(props : ControllerProps) {
         <Controller
             name={props.name}
             control={props.form.control}
+            rules={{ required: true }}
             render={( {field, fieldState} ) => (
                 <Field>
                     <FieldLabel htmlFor={field.name}></FieldLabel>
