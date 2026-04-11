@@ -18,6 +18,7 @@ import {Loading} from "@/components/Loading";
 import {LoadingError} from "@/components/LoadingError";
 
 import "./BookDetailStyles.css";
+import {GenericBookSummary} from "@/components/GenericBookSummary";
 
 export default function BookDetailsPage() {
     const { id } = useParams() // This gets the id path string!
@@ -39,13 +40,7 @@ export default function BookDetailsPage() {
                     <CardTitle className="title"> <BookTextIcon className="inline"/> {data?.bookTitle}</CardTitle>
                     </CardHeader>
                 <CardContent className="cardContent">
-                    <h3>ISBN: {data?.isbn}</h3>
-                    <h3>Page Count: {data?.pageCount}</h3>
-                    <h3>Availability: {
-                        data?.isAvailable ?
-                        "Yes, this book is available to take!" : "No, this book is not available to take."
-                    }</h3>
-                    <h3>Late Fee (in USD): ${data?.lateFeeUsd}</h3>
+                    <GenericBookSummary data={data}/>
                 </CardContent>
                 <CardFooter>
                     <Button className="m-2 py-4 px-6 bg-red-700 transform hover:scale-125 hover:bg-red-400" asChild>

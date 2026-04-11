@@ -111,20 +111,24 @@ export default function Home() {
       <div className="decorationCardSection">
       <Card className="card">
         <CardContent>
-          <Image src={"/spongebob_book.jpg"}
+          <Image className="w-full h-auto"
+                 src={"/spongebob_book.jpg"}
                  alt="Image of Spongebob reading a book"
                  width={200}
-                 height={150}></Image>
+                 height={150}
+          />
           <p>&quot;I like reading books&quot; - Spongebob Squarepants!</p>
         </CardContent>
       </Card>
 
       <Card className="card">
         <CardContent>
-          <Image src={"/patrick_reading.jpg"}
-                 alt="Image of Spongebob reading a book"
+          <Image className="w-full h-auto"
+                src={"/patrick_reading.jpg"}
                  width={200}
-                 height={150}></Image>
+                 height={150}
+                 alt="Image of Spongebob reading a book"
+          />
           <p>&quot;I can&apos;t read&quot; - Patrick Star</p>
         </CardContent>
       </Card>
