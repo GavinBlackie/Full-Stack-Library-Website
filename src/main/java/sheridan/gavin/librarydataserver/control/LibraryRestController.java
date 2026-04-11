@@ -57,6 +57,7 @@ public class LibraryRestController {
     @PutMapping("/{searchId}")
     @Operation(summary = "PUT a city", description = "Edit a single book in the database. ")
     public Book putBook(@PathVariable String searchId, @RequestBody @Valid Book editedBook) throws NoResourceFoundException{
+        log.trace("Attempting to edit book with id: {}", searchId);
 
         // 1. Find the existing book in the database
         //    Throw an IllegalArgumentException if it cannot be found!!
@@ -78,7 +79,7 @@ public class LibraryRestController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteBook(@PathVariable String id) throws NoResourceFoundException {
-        log.trace("Attempting to delete city with id: {}", id);
+        log.trace("Attempting to delete book with id: {}", id);
 
         // If that book exists, delete it and send a response!
         if (bookRepo.existsById(id)) {
