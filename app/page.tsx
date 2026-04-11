@@ -24,14 +24,32 @@ import Link from "next/link";
 import Image from "next/image";
 import "./MainPageStyles.css";
 import {HammerIcon, LibraryBigIcon, SettingsIcon, Trash2Icon, WrenchIcon} from "lucide-react";
+import {useMemo, useState} from "react";
 
 export default function Home() {
+    const [sortDataKey, setSortDataKey] = useState<string>("title");
 
   // Maintain a query that fetches books from the LibraryDataService API!
   const {data, error, isLoading} = useQuery( {
     queryKey: ["books"],
     queryFn: fetchBooks
   });
+
+    // --- Credit to Perplexity AI for helping me find out how to sort things!! ---
+    // https://www.perplexity.ai/search/in-react-nextjs-typescript-how-PrQNTXYhS7GXFZw.ASsU7Q?sm=d
+    const displayBooks = useMemo(() => {
+        if (!data) return [];
+
+        return [...data].sort((a, b) => {
+
+            // Perform various sorting operations depending on the sorting key!!
+            if (sortDataKey == "title") return a.bookTitle.localeCompare(b.bookTitle);
+            else if (sortDataKey == "pageCount") return a.pageCount - b.pageCount;
+
+            return a.bookTitle.localeCompare(b.bookTitle);
+        });
+    }, [data, sortDataKey]);
+    // ---------
 
   // Cases that content is not currently ready! - will display different stuff:
   if (isLoading) return <Loading/>;
@@ -55,11 +73,25 @@ export default function Home() {
         <TableCaption>A list of all library books.</TableCaption>
         <TableHeader>
           <TableRow>
-            <TableHead className="w-25">Title</TableHead>
-            <TableHead>ISBN</TableHead>
-            <TableHead>Page Count</TableHead>
-            <TableHead>Available</TableHead>
-            <TableHead>Late Fee in USD</TableHead>
+            <TableHead className="w-25">
+                <Button onClick={ () => setSortDataKey("title")}>
+                    Title
+                </Button>
+            </TableHead>
+            <TableHead>
+                ISBN
+            </TableHead>
+            <TableHead>
+                <Button onClick={ () => setSortDataKey("pageCount")}>
+                    Page Count
+                </Button>
+            </TableHead>
+            <TableHead>
+                Available
+            </TableHead>
+            <TableHead>
+                Late Fee in USD
+            </TableHead>
             <TableHead><SettingsIcon/>Options</TableHead>
           </TableRow>
         </TableHeader>
@@ -80,12 +112,12 @@ export default function Home() {
               to corresponding table cells!!! */
 
             // This is needed for some reason to allow returning to main page
-              Array.isArray(data) &&
+              Array.isArray(displayBooks) &&
 
                 // "For every book in books, create/map
                 // corresponding markup" - me
                 // (use ternary operator for the boolean value!!!)
-                data?.map( (book: Book) => (
+                displayBooks?.map( (book: Book) => (
                     <TableRow className="tableRow" key={book.itemId}>
                         <TableCell>
                           <Button variant="link" asChild>
