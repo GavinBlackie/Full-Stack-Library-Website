@@ -7,32 +7,51 @@ import * as z from "zod";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {Card, CardContent, CardFooter} from "@/components/ui/card";
 import {Button} from "@/components/ui/button";
-import {useMutation, useQueryClient} from "@tanstack/react-query";
-import {editBook} from "@/lib/api/book";
+import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
+import {editBook, fetchBook} from "@/lib/api/book";
 import {FormController} from "@/components/FormController";
 import { useRouter } from "next/navigation"
 import {ButtonGroup} from "@/components/ui/button-group";
 import Link from "next/link";
 import {ArrowBigRight, ArrowBigUpDash, RefreshCcwIcon} from "lucide-react";
 import {bookSchema} from "@/lib/book-zod-schema";
+import {useParams} from "next/dist/client/components/navigation";
+import {Loading} from "@/components/Loading";
+import {LoadingError} from "@/components/LoadingError";
+import {useEffect} from "react";
 
 export default function EditBookPage() {
 
     // GET the current details, display them to the user!
+    const { id } = useParams()
+    const { data, error, isLoading } = useQuery({
+        queryKey: ["city", id],
+        queryFn: () => fetchBook(id as string),
+    })
+    console.log("Got Book Details:", data)
 
     // form variable that helps the onSubmit function,
     // it infers how to use it based on the given schema rules
     const form = useForm<z.infer<typeof bookSchema>>({
         resolver: zodResolver(bookSchema),
-        defaultValues: { // Specify default form values
+        defaultValues: data || { // Specify default form values
             itemId: "BK-01",
             isbn: "999-9999",
             bookTitle: "",
             pageCount: 1,
             isAvailable: false,
             lateFeeUsd: 0.1
-        }
+        },
+        mode: "onTouched"
     });
+
+    // From CityDataClient, this allows the data from the initial GET to persist
+    // in the form slots!
+    useEffect(() => {
+        if (data) {
+            form.reset(data)
+        }
+    }, [data, form])
 
     const queryClient = useQueryClient() // For validation stuff when a POST has been made
     const router = useRouter() // Object for rerouting user to other pages!! (eg. going back to main page)
@@ -60,6 +79,11 @@ export default function EditBookPage() {
         console.log("Submitting: ", data);
         mutate(data); // Trigger the actual async POST mutation with the form data!
     }
+
+    // Display the loading page if still loading
+    if (isLoading) return <Loading/>
+    // Display the error page if error encountered (eg. server isn't being hosted)
+    if (error) return <LoadingError msg={error.message}/>
 
     return (
         <PageContainer>

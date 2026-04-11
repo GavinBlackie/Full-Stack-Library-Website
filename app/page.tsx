@@ -23,7 +23,7 @@ import { Button } from "@/components/ui/button"
 import Link from "next/link";
 import Image from "next/image";
 import "./MainPageStyles.css";
-import {HammerIcon, LibraryBigIcon, SettingsIcon, Trash2Icon} from "lucide-react";
+import {HammerIcon, LibraryBigIcon, SettingsIcon, Trash2Icon, WrenchIcon} from "lucide-react";
 
 export default function Home() {
 
@@ -97,9 +97,14 @@ export default function Home() {
                         <TableCell>{book.isAvailable ? "Yes" : "No"}</TableCell>
                         <TableCell>{book.lateFeeUsd}</TableCell>
                         <TableCell>
-                            <Button className="m-1 p-2 bg-red-900 transform hover:bg-red-700 hover:scale-125">
+                            <Button className="m-1 py-2 px-4 bg-red-900 transform hover:bg-red-700 hover:scale-125">
                                 <Link href={`/delete-book/${book.itemId}`}>
                                     <Trash2Icon/>
+                                </Link>
+                            </Button>
+                            <Button className="m-1 py-2 px-4 bg-cyan-600 transform hover:bg-cyan-500 hover:scale-125">
+                                <Link href={`/edit-book/${book.itemId}`}>
+                                    <WrenchIcon/>
                                 </Link>
                             </Button>
                         </TableCell>
