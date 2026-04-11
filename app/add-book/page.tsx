@@ -13,25 +13,8 @@ import {FormController} from "@/components/FormController";
 import { useRouter } from "next/navigation"
 import {ButtonGroup} from "@/components/ui/button-group";
 import Link from "next/link";
-
-// A book schema made of Zod objects (for the forms),
-const bookSchema = z.object({
-    itemId: z
-        .string().min(4, {message: "Book Id must be at least 4 characters"}),
-    isbn: z
-        .string().min(4, {message: "ISBN must have at least 4 characters"}),
-    bookTitle: z
-        .string().min(2, {message: "Must have at least 2 characters for title"} ),
-    pageCount: z.coerce
-        .number<number>("Page Count must be a number. ")
-        .int("Page Count must be a whole number. ")
-        .min(0, "Page Count cannot be negative. "),
-    isAvailable: z
-        .boolean(),
-    lateFeeUsd: z.coerce
-        .number<number>("Late fee must numeric. ")
-        .min(0, "Area cannot be negative. "),
-});
+import {ArrowBigRight, ArrowBigUpDash} from "lucide-react";
+import {bookSchema} from "@/lib/book-zod-schema";
 
 // Reference docs for form Controllers and Fields:
 // https://ui.shadcn.com/docs/forms/react-hook-form
@@ -142,11 +125,13 @@ export default function AddBookPage() {
                                 <Button
                                     className="my-2 ml-2 py-6 px-14 text-2xl bg-green-600 transform hover:bg-green-300 hover:scale-125"
                                     type="submit" form="newBookForm">
+                                    <ArrowBigUpDash/>
                                     Submit
                                 </Button>
                                 <Button className="my-2 mr-2 py-6 px-14 text-2xl bg-red-700 transform hover:bg-red-400 hover:scale-125"
                                     asChild variant="outline">
                                     <Link className="text-white hover:text-white" href="/">
+                                        <ArrowBigRight/>
                                         Cancel
                                     </Link>
                                 </Button>

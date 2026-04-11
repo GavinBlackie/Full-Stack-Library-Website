@@ -17,7 +17,7 @@ import {ArrowBigLeftIcon, BookTextIcon} from "lucide-react";
 import {Loading} from "@/components/Loading";
 import {LoadingError} from "@/components/LoadingError";
 
-import "./BookDetailStyles.css";
+import "../../BookDetailStyles.css";
 import {GenericBookSummary} from "@/components/GenericBookSummary";
 
 export default function BookDetailsPage() {
@@ -35,7 +35,7 @@ export default function BookDetailsPage() {
 
     return (
         <PageContainer>
-            <Card className="card size-130">
+            <Card className="card size-130 border-accent">
                 <CardHeader>
                     <CardTitle className="title"> <BookTextIcon className="inline"/> {data?.bookTitle}</CardTitle>
                     </CardHeader>
@@ -45,7 +45,7 @@ export default function BookDetailsPage() {
                 <CardFooter>
                     <Button className="m-2 py-4 px-6 bg-red-700 transform hover:scale-125 hover:bg-red-400" asChild>
                         <Link href="/">
-                            <ArrowBigLeftIcon></ArrowBigLeftIcon>
+                            <ArrowBigLeftIcon/>
                             Go Back to Book List
                         </Link>
                     </Button>
