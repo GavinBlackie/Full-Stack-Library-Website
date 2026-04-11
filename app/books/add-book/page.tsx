@@ -22,6 +22,7 @@ import {Input} from "@/components/ui/input";
 import {Button} from "@/components/ui/button";
 import {useMutation} from "@tanstack/react-query";
 import {addBook} from "@/lib/api/book";
+import {FormController} from "@/components/FormController";
 
 // A book schema made of Zod objects (for the forms),
 const bookSchema = z.object({
@@ -127,6 +128,11 @@ export default function AddBookPage() {
                             </Field>
                         )}
                     />
+                    <FormController name="bookTitle"
+                                    type="text"
+                                    placeholder="Lord of the Rings - The Fellowship of the Ring"
+                                    desc="Enter book title. "
+                                    form={form}/>
                 </form>
                     {/* Footer in the Card for form buttons
                     (they don't have to be inside the form tag itself) */}
