@@ -67,15 +67,18 @@ export default function AddBookPage() {
         <PageContainer>
             <Card>
                 <CardContent>
-                <h1 className="text-5xl text-shadow-green-400">Add Book</h1>
+                <h1 className="my-7 mx-2 text-5xl text-shadow-green-400">Add Book</h1>
 
-                <form id="newBookForm" onSubmit={form.handleSubmit(onSubmit)}>
+                <form id="newBookForm"
+                      className="w-3/4 space-y-8"
+                      onSubmit={form.handleSubmit(onSubmit)}>
                     {/* Using my custom FormController to make things more readable and separate concerns! */}
                     <FormController name="itemId"
                                     type="text"
                                     label="Item ID"
                                     placeholder="BK-00"
                                     desc="Enter the book id. "
+                                    fieldOrientation="vertical"
                                     form={form}
                     />
                     <FormController name="isbn"
@@ -83,6 +86,7 @@ export default function AddBookPage() {
                                     label="ISBN"
                                     placeholder="999-9999"
                                     desc="Enter the book ISBN. "
+                                    fieldOrientation="vertical"
                                     form={form}
                     />
                     <FormController name="bookTitle"
@@ -90,12 +94,14 @@ export default function AddBookPage() {
                                     label="Book Title"
                                     placeholder="Lord of the Rings - The Fellowship of the Ring"
                                     desc="Enter book title. "
+                                    fieldOrientation="vertical"
                                     form={form}
                     />
                     <FormController name="isAvailable"
                                     type="checkbox"
                                     label="Availability"
                                     desc="Is the book currently available to loan? "
+                                    fieldOrientation="horizontal"
                                     form={form}
                     />
                     <FormController name="pageCount"
@@ -104,6 +110,7 @@ export default function AddBookPage() {
                                     desc="Enter the page count. "
                                     placeholder="200"
                                     stepSize={1}
+                                    fieldOrientation="vertical"
                                     form={form}
                     />
                     <FormController name="lateFeeUsd"
@@ -112,6 +119,7 @@ export default function AddBookPage() {
                                     desc="Enter the late fee cost in USD. "
                                     placeholder="0.00"
                                     stepSize={1}
+                                    fieldOrientation="vertical"
                                     form={form}
                     />
                 </form>

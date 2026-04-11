@@ -1,5 +1,5 @@
 import {Controller, ControllerRenderProps, FieldPath, UseFormReturn} from "react-hook-form";
-import {Field, FieldDescription, FieldError, FieldLabel} from "@/components/ui/field";
+import {Field, FieldDescription, FieldError, FieldGroup, FieldLabel} from "@/components/ui/field";
 import {Input} from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox"
 import {Book} from "@/lib/api/booktype";
@@ -13,6 +13,7 @@ export interface ControllerProps {
     desc : string,
     value? : string,
     stepSize? : number,
+    fieldOrientation? : "vertical" | "horizontal" | "responsive" | null | undefined,
     form : UseFormReturn<Book, Book>,
 }
 
@@ -41,6 +42,7 @@ function GenerateInputTag(props : ControllerProps,
                 <Checkbox
                     {...field}
                     id={field.name}
+                    className="h-7 w-7 shrink-0"
                     value={typeof field.value === "string" || typeof field.value === "number" ? field.value : ""} // Also had to put this here as well
                     checked={field.value === true} // This had to be this way to work!
                     onCheckedChange={field.onChange}
@@ -73,16 +75,18 @@ export function FormController(props : ControllerProps) {
             control={props.form.control}
             rules={{ required: true }}
             render={( {field, fieldState} ) => (
-                <Field>
-                    <FieldLabel htmlFor={field.name}>{props.label}</FieldLabel>
-                    {GenerateInputTag(props, field) }
-                    <FieldDescription>
-                        {props.desc}
-                    </FieldDescription>
-                    { // Conditionally render an error!
-                        fieldState.invalid && <FieldError errors={ [fieldState.error] }/>
-                    }
-                </Field>
+                <FieldGroup>
+                    <Field orientation={props.fieldOrientation}>
+                        <FieldLabel htmlFor={field.name}>{props.label}</FieldLabel>
+                        {GenerateInputTag(props, field) }
+                        <FieldDescription>
+                            {props.desc}
+                        </FieldDescription>
+                        { // Conditionally render an error!
+                            fieldState.invalid && <FieldError errors={ [fieldState.error] }/>
+                        }
+                    </Field>
+                </FieldGroup>
             )}
         />
     )
