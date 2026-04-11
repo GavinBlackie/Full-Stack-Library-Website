@@ -56,7 +56,7 @@ public class LibraryRestController {
      */
     @PutMapping("/{searchId}")
     @Operation(summary = "PUT a city", description = "Edit a single book in the database. ")
-    public Book putBook(@PathVariable String searchId, @RequestBody @Valid Book searchBook) throws NoResourceFoundException{
+    public Book putBook(@PathVariable String searchId, @RequestBody @Valid Book editedBook) throws NoResourceFoundException{
 
         // 1. Find the existing book in the database
         //    Throw an IllegalArgumentException if it cannot be found!!
@@ -65,11 +65,11 @@ public class LibraryRestController {
 
         // 2. Edit the contents
         // (yes, this could use the .map with the previous step to shorten it, but this is more readable to me!)
-        foundBook.setItemId(        searchId                    );
-        foundBook.setIsbn(          searchBook.getIsbn()        );
-        foundBook.setPageCount(     searchBook.getPageCount()   );
-        foundBook.setAvailable(     searchBook.getAvailable()   );
-        foundBook.setLateFeeUsd(    searchBook.getLateFeeUsd()  );
+        foundBook.setIsbn(          editedBook.getIsbn()        );
+        foundBook.setBookTitle(     editedBook.getBookTitle()   );
+        foundBook.setPageCount(     editedBook.getPageCount()   );
+        foundBook.setAvailable(     editedBook.getAvailable()   );
+        foundBook.setLateFeeUsd(    editedBook.getLateFeeUsd()  );
 
         // 3. Return the newly changed book
         bookRepo.save(foundBook);
