@@ -54,11 +54,9 @@ public class LibraryRestController {
     /*
       --- PUT: Edit a single City! ---
      */
-    @PutMapping(produces = "application/json")
+    @PutMapping("/{searchId}")
     @Operation(summary = "PUT a city", description = "Edit a single book in the database. ")
-    public Book putBook(@RequestBody @Valid Book searchBook) throws NoResourceFoundException{
-
-        String searchId = searchBook.getItemId();
+    public Book putBook(@PathVariable String searchId, @RequestBody @Valid Book searchBook) throws NoResourceFoundException{
 
         // 1. Find the existing book in the database
         //    Throw an IllegalArgumentException if it cannot be found!!
