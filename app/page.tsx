@@ -93,7 +93,7 @@ export default function Home() {
                     </TableCell>
                     <TableCell>{book.isbn}</TableCell>
                     <TableCell>{book.pageCount}</TableCell>
-                    <TableCell>{book.available ? "Yes" : "No"}</TableCell>
+                    <TableCell>{book.isAvailable ? "Yes" : "No"}</TableCell>
                     <TableCell>{book.lateFeeUsd}</TableCell>
                     </TableRow>
                 )) : <></>

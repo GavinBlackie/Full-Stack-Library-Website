@@ -21,7 +21,7 @@ export interface ControllerProps {
     Determines which one to use based on the "type" string!
  */
 function GenerateInputTag(props : ControllerProps,
-                          field :  ControllerRenderProps<Book, "itemId" | "bookTitle" | "available" | "isbn" | "pageCount" | "lateFeeUsd">  // Weird type just for this to work :(
+                          field :  ControllerRenderProps<Book, "itemId" | "bookTitle" | "isAvailable" | "isbn" | "pageCount" | "lateFeeUsd">  // Weird type just for this to work :(
     ) {
     switch (props.type) {
         case "text":

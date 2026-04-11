@@ -11,6 +11,8 @@ import {useMutation, useQueryClient} from "@tanstack/react-query";
 import {addBook} from "@/lib/api/book";
 import {FormController} from "@/components/FormController";
 import { useRouter } from "next/navigation"
+import {ButtonGroup} from "@/components/ui/button-group";
+import Link from "next/link";
 
 // A book schema made of Zod objects (for the forms),
 const bookSchema = z.object({
@@ -24,7 +26,7 @@ const bookSchema = z.object({
         .number<number>("Page Count must be a number. ")
         .int("Page Count must be a whole number. ")
         .min(0, "Page Count cannot be negative. "),
-    available: z
+    isAvailable: z
         .boolean(),
     lateFeeUsd: z.coerce
         .number<number>("Late fee must numeric. ")
@@ -46,7 +48,7 @@ export default function AddBookPage() {
             isbn: "999-9999",
             bookTitle: "",
             pageCount: 1,
-            available: false,
+            isAvailable: false,
             lateFeeUsd: 0.1
         }
     });
@@ -82,6 +84,8 @@ export default function AddBookPage() {
         <PageContainer>
             <Card>
                 <CardContent>
+                <h1 className="text-5xl text-shadow-green-400">Add Book</h1>
+
                 <form id="newBookForm" onSubmit={form.handleSubmit(onSubmit)}>
                     {/* Using my custom FormController to make things more readable and separate concerns! */}
                     <FormController name="itemId"
@@ -107,7 +111,7 @@ export default function AddBookPage() {
                                     value="Title"
                                     form={form}
                     />
-                    <FormController name="available"
+                    <FormController name="isAvailable"
                                     type="checkbox"
                                     label="Availability"
                                     desc="Is the book currently available to loan? "
@@ -134,9 +138,16 @@ export default function AddBookPage() {
                     (they don't have to be inside the form tag itself) */}
                     <CardFooter>
                         <Field>
-                            <Button type="submit" form="newBookForm">
-                                Submit
-                            </Button>
+                            <ButtonGroup>
+                                <Button type="submit" form="newBookForm">
+                                    Submit
+                                </Button>
+                                <Button asChild variant="outline">
+                                    <Link href="/">
+                                        Cancel
+                                    </Link>
+                                </Button>
+                            </ButtonGroup>
                         </Field>
                     </CardFooter>
                 </CardContent>
