@@ -13,7 +13,7 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card"
-import {BookTextIcon} from "lucide-react";
+import {ArrowBigRight, BookTextIcon, Trash2Icon} from "lucide-react";
 
 import "../../BookDetailStyles.css";
 import {GenericBookSummary} from "@/components/GenericBookSummary";
@@ -21,6 +21,8 @@ import {useRouter} from "next/navigation";
 import * as z from "zod";
 import {Button} from "@/components/ui/button";
 import {bookSchema} from "@/lib/book-zod-schema";
+import {ButtonGroup} from "@/components/ui/button-group";
+import Link from "next/link";
 
 export default function DeleteBooksPage() {
     // Get the id variable from the page url!
@@ -63,9 +65,23 @@ export default function DeleteBooksPage() {
                     <GenericBookSummary data={data}/>
               </CardContent>
               <CardFooter>
-                    <Button onClick={() => {
-                        mutate(id as string) } // Mutate by known id instead of data.itemId (which takes async time to get)
-                    }>Delete</Button>
+                  <ButtonGroup>
+                      <Button className="my-2 ml-2 py-6 px-14 text-2xl bg-red-900 transform hover:bg-red-700 hover:scale-125"
+                          onClick={() => {mutate(id as string) } // Mutate by known id instead of data.itemId (which takes async time to get)
+                            }
+                      >
+                          <Trash2Icon/>
+                          Delete
+                      </Button>
+
+                      <Button className="my-2 mr-2 py-6 px-14 text-2xl bg-yellow-600 transform hover:bg-yellow-500 hover:scale-125"
+                              asChild variant="outline">
+                          <Link className="text-white transform hover:text-white" href="/">
+                              <ArrowBigRight/>
+                              Cancel
+                          </Link>
+                      </Button>
+                  </ButtonGroup>
               </CardFooter>
           </Card>
       </PageContainer>
