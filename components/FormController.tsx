@@ -8,9 +8,10 @@ import {Book} from "@/lib/api/booktype";
 export interface ControllerProps {
     name : FieldPath<Book>,
     type : string,
-    placeholder?: string,
+    label : string,
+    placeholder? : string,
     desc : string,
-    value?: string,
+    value? : string,
     stepSize? : number,
     form : UseFormReturn<Book, Book>,
 }
@@ -73,7 +74,7 @@ export function FormController(props : ControllerProps) {
             rules={{ required: true }}
             render={( {field, fieldState} ) => (
                 <Field>
-                    <FieldLabel htmlFor={field.name}></FieldLabel>
+                    <FieldLabel htmlFor={field.name}>{props.label}</FieldLabel>
                     {GenerateInputTag(props, field) }
                     <FieldDescription>
                         {props.desc}

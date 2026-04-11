@@ -2,23 +2,10 @@
 
 import {PageContainer} from "@/components/page-container";
 import {useForm} from "react-hook-form";
-import {
-    Field,
-    FieldContent,
-    FieldDescription,
-    FieldError,
-    FieldGroup,
-    FieldLabel,
-    FieldLegend,
-    FieldSeparator,
-    FieldSet,
-    FieldTitle,
-} from "@/components/ui/field";
-import {Controller} from "react-hook-form";
+import {Field} from "@/components/ui/field";
 import * as z from "zod";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {Card, CardContent, CardFooter} from "@/components/ui/card";
-import {Input} from "@/components/ui/input";
 import {Button} from "@/components/ui/button";
 import {useMutation} from "@tanstack/react-query";
 import {addBook} from "@/lib/api/book";
@@ -27,19 +14,20 @@ import {FormController} from "@/components/FormController";
 // A book schema made of Zod objects (for the forms),
 const bookSchema = z.object({
     itemId: z
-        .string(),
+        .string().min(4, {message: "Book Id must be at least 4 characters"}),
     isbn: z
-        .string(),
+        .string().min(4, {message: "ISBN must have at least 4 characters"}),
     bookTitle: z
-        .string(),
+        .string().min(2, {message: "Must have at least 2 characters for title"} ),
     pageCount: z.coerce
-        .number<number>("Population must be a number")
-        .int("Population must be a whole number")
-        .min(0, "Population cannot be negative"),
+        .number<number>("Page Count must be a number. ")
+        .int("Page Count must be a whole number. ")
+        .min(0, "Page Count cannot be negative. "),
     available: z
         .boolean(),
-    lateFeeUsd: z
-        .float64()
+    lateFeeUsd: z.coerce
+        .number<number>("Late fee must numeric. ")
+        .min(0, "Area cannot be negative. "),
 });
 
 // Reference docs for form Controllers and Fields:
@@ -69,7 +57,7 @@ export default function AddBookPage() {
     const { mutate } = useMutation({
         mutationFn: addBook,
         onSuccess: () => {
-            console.log("POSTED");
+            console.log("POSTED new Book");
         },
         onError: (err: Error) => {
             console.error(err);
@@ -88,14 +76,17 @@ export default function AddBookPage() {
             <Card>
                 <CardContent>
                 <form id="newBookForm" onSubmit={form.handleSubmit(onSubmit)}>
+                    {/* Using my custom FormController to make things more readable and separate concerns! */}
                     <FormController name="itemId"
                                     type="text"
+                                    label="Item ID"
                                     placeholder="BK-00"
                                     desc="Enter the book id. "
                                     form={form}
                     />
                     <FormController name="isbn"
                                     type="text"
+                                    label="ISBN"
                                     placeholder="999-9999"
                                     desc="Enter the book ISBN. "
                                     value="999-9999"
@@ -103,6 +94,7 @@ export default function AddBookPage() {
                     />
                     <FormController name="bookTitle"
                                     type="text"
+                                    label="Book Title"
                                     placeholder="Lord of the Rings - The Fellowship of the Ring"
                                     desc="Enter book title. "
                                     value="Title"
@@ -110,13 +102,23 @@ export default function AddBookPage() {
                     />
                     <FormController name="available"
                                     type="checkbox"
+                                    label="Availability"
                                     desc="Is the book currently available to loan? "
                                     form={form}
                     />
                     <FormController name="pageCount"
                                     type="number"
+                                    label="Page Count"
                                     desc="Enter the page count. "
                                     placeholder="200"
+                                    stepSize={1}
+                                    form={form}
+                    />
+                    <FormController name="lateFeeUsd"
+                                    type="number"
+                                    label="Late Fee"
+                                    desc="Enter the late fee cost in USD. "
+                                    placeholder="0.00"
                                     stepSize={1}
                                     form={form}
                     />
