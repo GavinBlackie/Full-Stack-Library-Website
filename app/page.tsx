@@ -43,10 +43,16 @@ export default function Home() {
         return [...data].sort((a, b) => {
 
             // Perform various sorting operations depending on the sorting key!!
+            // (I made these sort statements with help from here for the bool one:
+            // https://www.geeksforgeeks.org/javascript/sort-an-array-of-objects-using-boolean-property-in-javascript/)
+            // Also for some reason, switch statements do not work here!
             if (sortDataKey == "title") return a.bookTitle.localeCompare(b.bookTitle);
+            else if (sortDataKey == "isbn") return a.isbn.localeCompare(b.isbn);
             else if (sortDataKey == "pageCount") return a.pageCount - b.pageCount;
+            else if (sortDataKey == "available") return (a.isAvailable === b.isAvailable)? 0 : a.isAvailable? -1 : 1;
+            else if (sortDataKey == "lateFeeUsd") return a.lateFeeUsd - b.lateFeeUsd;
 
-            return a.bookTitle.localeCompare(b.bookTitle);
+            return a.bookTitle.localeCompare(b.bookTitle); // default to sorting by title
         });
     }, [data, sortDataKey]);
     // ---------
@@ -70,7 +76,10 @@ export default function Home() {
          (Started using a template given on shadcn docs)
        */}
       <Table>
-        <TableCaption>A list of all library books.</TableCaption>
+        <TableCaption>
+            A list of all library books. Click the trash can icon to delete entries,
+            the wrench to edit book entries, and the column headers to sort them in ascending order.
+        </TableCaption>
         <TableHeader>
           <TableRow>
             <TableHead className="w-25">
@@ -79,7 +88,9 @@ export default function Home() {
                 </Button>
             </TableHead>
             <TableHead>
-                ISBN
+                <Button onClick={ () => setSortDataKey("isbn")}>
+                    ISBN
+                </Button>
             </TableHead>
             <TableHead>
                 <Button onClick={ () => setSortDataKey("pageCount")}>
@@ -87,10 +98,14 @@ export default function Home() {
                 </Button>
             </TableHead>
             <TableHead>
-                Available
+                <Button onClick={ () => setSortDataKey("available")}>
+                    Available
+                </Button>
             </TableHead>
             <TableHead>
-                Late Fee in USD
+                <Button onClick={ () => setSortDataKey("lateFeeUsd")}>
+                    Late Fee in USD
+                </Button>
             </TableHead>
             <TableHead><SettingsIcon/>Options</TableHead>
           </TableRow>
