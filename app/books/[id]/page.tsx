@@ -42,7 +42,7 @@ export default function BookDetailsPage() {
                     <h3>ISBN: {data?.isbn}</h3>
                     <h3>Page Count: {data?.pageCount}</h3>
                     <h3>Availablility: {
-                        data?.isAvailable ?
+                        data?.available ?
                         "Yes, this book is available to take!" : "No, this book is not available to take."
                     }</h3>
                     <h3>Late Fee (in USD): ${data?.lateFeeUsd}</h3>

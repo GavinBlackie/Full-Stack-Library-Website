@@ -7,9 +7,10 @@ import * as z from "zod";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {Card, CardContent, CardFooter} from "@/components/ui/card";
 import {Button} from "@/components/ui/button";
-import {useMutation} from "@tanstack/react-query";
+import {useMutation, useQueryClient} from "@tanstack/react-query";
 import {addBook} from "@/lib/api/book";
 import {FormController} from "@/components/FormController";
+import { useRouter } from "next/navigation"
 
 // A book schema made of Zod objects (for the forms),
 const bookSchema = z.object({
@@ -50,6 +51,9 @@ export default function AddBookPage() {
         }
     });
 
+    const queryClient = useQueryClient() // For validation stuff when a POST has been made
+    const router = useRouter() // Object for rerouting user to other pages!! (eg. going back to main page)
+
     /* Following the pattern in CityDataClient!
     * This function will be the one actually calling the async addBook function,
     * it can also cause redirections! (in this case, it will go back to the root page!)
@@ -58,6 +62,9 @@ export default function AddBookPage() {
         mutationFn: addBook,
         onSuccess: () => {
             console.log("POSTED new Book");
+            // Invalidate any active async query (eg. any ongoing from prev pages)
+            void queryClient.invalidateQueries({ queryKey: ["books"] })
+            router.push("/"); // push user to main page after successful POST
         },
         onError: (err: Error) => {
             console.error(err);
