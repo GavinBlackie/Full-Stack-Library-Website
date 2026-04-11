@@ -18,7 +18,9 @@ export interface ControllerProps {
     Component to create a certain type of form input.
     Determines which one to use based on the "type" string!
  */
-function GenerateInputTag(props : ControllerProps, field : ControllerRenderProps<Book>) {
+function GenerateInputTag(props : ControllerProps,
+                          field :  ControllerRenderProps<Book, "itemId" | "bookTitle" | "available" | "isbn" | "pageCount" | "lateFeeUsd">  // Weird type just for this to work :(
+    ) {
     switch (props.type) {
         case "text":
             return (
@@ -38,8 +40,8 @@ function GenerateInputTag(props : ControllerProps, field : ControllerRenderProps
                     {...field}
                     id={field.name}
                     value={typeof field.value === "string" || typeof field.value === "number" ? field.value : ""} // Also had to put this here as well
+                    checked={field.value === true} // This had to be this way to work!
                     onCheckedChange={field.onChange}
-                    defaultChecked
                 />
             );
     }

@@ -107,31 +107,11 @@ export default function AddBookPage() {
                                     value="Title"
                                     form={form}
                     />
-
-                    <Controller
-                        name="available"
-                        control={form.control}
-                        render={( {field, fieldState} ) => (
-                            <Field>
-                                <FieldLabel htmlFor={field.name}></FieldLabel>
-                                <Checkbox
-                                    {...field}
-                                    id={field.name}
-                                    value={typeof field.value === "string" || typeof field.value === "number" ? field.value : ""} // Also had to put this here as well
-                                    checked={field.value}
-                                    onCheckedChange={field.onChange}
-                                    defaultChecked
-                                />
-                                <FieldDescription>
-                                    Enter the book ISBN.
-                                </FieldDescription>
-                                { // Conditionally render an error!
-                                    fieldState.invalid && <FieldError errors={ [fieldState.error] }/>
-                                }
-                            </Field>
-                        )}
+                    <FormController name="available"
+                                    type="checkbox"
+                                    desc="Is the book currently available to loan? "
+                                    form={form}
                     />
-
                 </form>
                     {/* Footer in the Card for form buttons
                     (they don't have to be inside the form tag itself) */}
