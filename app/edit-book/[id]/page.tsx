@@ -89,7 +89,7 @@ export default function EditBookPage() {
         <PageContainer>
             <Card>
                 <CardContent>
-                    <h1 className="my-7 mx-2 text-5xl text-shadow-green-400">Edit Book</h1>
+                    <h1 className="my-7 mx-2 text-5xl text-cyan-700">Edit Book</h1>
 
                     <form id="newBookForm"
                           className="w-3/4 space-y-8"

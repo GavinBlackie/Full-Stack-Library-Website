@@ -67,7 +67,7 @@ export default function AddBookPage() {
         <PageContainer>
             <Card>
                 <CardContent>
-                <h1 className="my-7 mx-2 text-5xl text-shadow-green-400">Add Book</h1>
+                <h1 className="my-7 mx-2 text-5xl text-green-700">Add Book</h1>
 
                 <form id="newBookForm"
                       className="w-3/4 space-y-8"

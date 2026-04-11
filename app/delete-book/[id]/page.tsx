@@ -59,6 +59,7 @@ export default function DeleteBooksPage() {
       <PageContainer>
           <Card className="card size-130 border-accent">
               <CardHeader>
+                  <h1 className="my-7 mx-2 text-5xl text-red-700">Delete Book?</h1>
                   <CardTitle className="title"> <BookTextIcon className="inline"/> {data?.bookTitle}</CardTitle>
               </CardHeader>
               <CardContent>
