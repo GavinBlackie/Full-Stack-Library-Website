@@ -1,0 +1,25 @@
+.card {
+    border: 4px groove black;
+}
+
+.card h3 {
+    padding: 0.4em;
+    margin: 0.25em;
+}
+
+.card h3:hover{
+    color: midnightblue;
+
+    font-size: large;
+}
+
+.title {
+    text-shadow: 3px 2px 2px darkgrey;
+    color: black;
+    font-size: x-large;
+}
+
+.title:hover {
+    color: blue;
+    font-size: xx-large;
+}
