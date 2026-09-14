@@ -8,3 +8,10 @@ to generate clean looking API documentation for descriptions about what HTTP met
 
 To run this project, get Intellij and open the two seperate server and client folders. Ensure the server runs on port 8080 ([http://localhost:8080/](http://localhost:8080/)),
 and the client should run on port 3000 ([http://localhost:3000/](http://localhost:3000/)).
+
+
+Here is a demo setup screenshot displaying the API view and server running:
+![Screenshot of Java Springboot server running and API view](https://github.com/GavinBlackie/Full-Stack-Library-Website/blob/main/ServerDemoScreenshot.png)
+
+And here is another demo screenshot displaying the client running:
+![Screenshot of TypeScript React client running](https://github.com/GavinBlackie/Full-Stack-Library-Website/blob/main/ClientDemoScreenshot.png)
